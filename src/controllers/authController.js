@@ -5,12 +5,12 @@ import bcrypt from "bcrypt";
 export const registerUser = async (req, res) => {
   const { username, password } = req.body;
 
-  const validationResult = validateUser({ username, password });
-  if (!validationResult.success) {
-    return res.status(400).json({ errors: validationResult.error });
-  }
-
   try {
+    const validationResult = validateUser({ username, password });
+    if (!validationResult.success) {
+      return res.status(400).json({ errors: validationResult.error });
+    }
+
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists." });
