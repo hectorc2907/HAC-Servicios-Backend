@@ -14,4 +14,5 @@ connectDB()
   })
   .catch((error) => {
     console.error(`Error al conectar con MongoDB:`, error.message);
+    process.exit(1);
   });
