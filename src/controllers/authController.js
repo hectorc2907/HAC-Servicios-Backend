@@ -1,8 +1,15 @@
+import { validateUser } from "../middlewares/validateUser.js";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
 export const registerUser = async (req, res) => {
   const { username, password } = req.body;
+
+  const validationResult = validateUser({ username, password });
+  if (!validationResult.success) {
+    return res.status(400).json({ errors: validationResult.error });
+  }
+
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser) {

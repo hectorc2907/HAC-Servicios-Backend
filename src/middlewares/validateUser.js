@@ -14,9 +14,9 @@ const userSchema = z.object({
     .max(16, { message: "Password cannot exceed 16 characters." }),
 });
 
-function validaUser(input, partial = false) {
+function validateUser(input, partial = false) {
   const schemaToValidate = partial ? userSchema.partial() : userSchema;
   return schemaToValidate.safeParse(input);
 }
 
-export { userSchema, validaUser };
+export { userSchema, validateUser };
