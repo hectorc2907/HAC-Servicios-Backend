@@ -75,3 +75,17 @@ export const logoutUser = async (req, res) => {
     res.status(500).json({ message: "Failed server" });
   }
 };
+
+export const checkAuth = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.status(200).json({ message: "Authenticated", userId: decoded.userId });
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid Token" });
+  }
+};
