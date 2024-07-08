@@ -60,3 +60,18 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Failed server" });
   }
 };
+
+export const logoutUser = async (req, res) => {
+  try {
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Logout failed because:", error.message);
+    res.status(500).json({ message: "Failed server" });
+  }
+};
