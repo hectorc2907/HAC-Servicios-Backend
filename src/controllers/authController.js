@@ -1,6 +1,7 @@
 import { validateUser } from "../middlewares/validateUser.js";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
   const { username, password } = req.body;
@@ -41,6 +42,17 @@ export const loginUser = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60,
+    });
 
     res.status(200).json({ message: "Login Succesfully!" });
   } catch (error) {
