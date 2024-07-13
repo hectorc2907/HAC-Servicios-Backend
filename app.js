@@ -1,12 +1,14 @@
 import express from "express";
-import logger from "morgan";
+import morgan from "morgan";
+import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
-app.use(logger("dev"));
-
-app.get("/", (req, res) => {
-  res.send("<h1>Hola Mundo</h1>");
-});
+app.use(express());
+app.use(cors());
+app.use(morgan("dev"));
 
 export default app;
