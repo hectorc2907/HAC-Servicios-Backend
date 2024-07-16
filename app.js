@@ -1,22 +1,15 @@
 import express from "express";
-import logger from "morgan";
-import cookieParser from "cookie-parser";
+import morgan from "morgan";
 import cors from "cors";
-import { authRouter } from "./src/routes/userRoute.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    credentials: true,
-  })
-);
-app.use(logger("dev"));
-
-app.use("/api", authRouter);
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(morgan("dev"));
 
 export default app;
