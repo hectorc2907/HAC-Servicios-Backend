@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 import { promisify } from "util";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const TOKEN_SECRET = process.env.JWT_SECRET;
 const signAsync = promisify(jwt.sign);
