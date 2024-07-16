@@ -63,6 +63,10 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  res.cookie("token", "", { expire: new Date(0) });
-  return res.sendStatus(200);
+  try {
+    res.cookie("token", "", { expire: new Date(0) });
+    return res.sendStatus(200);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
