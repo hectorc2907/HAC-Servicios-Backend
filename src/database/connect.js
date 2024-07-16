@@ -10,7 +10,7 @@ export const connectDB = async () => {
     });
     console.log(">>> DB is connected");
   } catch (error) {
-    console.error(error);
+    console.error("DB connection erro:", error);
     process.exit(1);
   }
 };
