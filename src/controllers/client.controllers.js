@@ -40,7 +40,7 @@ export const deleteClient = async (req, res) => {
   try {
     const client = await Client.findByIdAndDelete(req.params.id);
     if (!client) return res.status(404).json({ message: "Client not found" });
-    return res.sendStauts(204);
+    return res.sendStatus(200);
   } catch (error) {
     return res.status(404).json({ message: "Client not found" });
   }
