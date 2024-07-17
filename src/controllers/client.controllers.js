@@ -13,6 +13,8 @@ export const getClient = async (req, res) => {
   try {
     const client = await Client.findById(req.params.id).populate("user");
     if (!client) return res.status(404).json({ message: "Client not found" });
+    if (client.user._id.toString() !== req.user.id)
+      return res.status(401).json({ message: "Unauthorized" });
     res.json(client);
   } catch (error) {
     return res.status(404).json({ message: "Client not found" });
@@ -38,8 +40,11 @@ export const createClient = async (req, res) => {
 
 export const deleteClient = async (req, res) => {
   try {
-    const client = await Client.findByIdAndDelete(req.params.id);
+    const client = await Client.findById(req.params.id);
     if (!client) return res.status(404).json({ message: "Client not found" });
+    if (client.user._id.toString() !== req.user.id)
+      return res.status(401).json({ message: "Unauthorized" });
+    await client.deleteOne();
     return res.sendStatus(200);
   } catch (error) {
     return res.status(404).json({ message: "Client not found" });
@@ -48,11 +53,13 @@ export const deleteClient = async (req, res) => {
 
 export const updateClient = async (req, res) => {
   try {
-    const client = await Client.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const client = await Client.findById(req.params.id);
     if (!client) return res.status(404).json({ message: "Client not found" });
-    res.json(client);
+    if (client.user._id.toString() !== req.user.id)
+      return res.status(401).json({ message: "Unauthorized" });
+    Object.assign(client, req.body);
+    const updateClient = await client.save();
+    res.json(updateClient);
   } catch (error) {
     return res.status(404).json({ message: "Client not found" });
   }
