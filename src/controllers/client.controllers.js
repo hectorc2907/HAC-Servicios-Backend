@@ -18,3 +18,20 @@ export const getClient = async (req, res) => {
     return res.status(404).json({ message: "Client not found" });
   }
 };
+
+export const createClient = async (req, res) => {
+  try {
+    const { firtName, lastName, phoneNumber, address } = req.body;
+    const newClient = new Client({
+      firtName,
+      lastName,
+      phoneNumber,
+      address,
+      user: req.user.id,
+    });
+    const savedClient = await newClient.save();
+    res.json(savedClient);
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
