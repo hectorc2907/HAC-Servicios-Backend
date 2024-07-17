@@ -45,3 +45,15 @@ export const deleteClient = async (req, res) => {
     return res.status(404).json({ message: "Client not found" });
   }
 };
+
+export const updateClient = async (req, res) => {
+  try {
+    const client = await Client.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!client) return res.status(404).json({ message: "Client not found" });
+    res.json(client);
+  } catch (error) {
+    return res.status(404).json({ message: "Client not found" });
+  }
+};
