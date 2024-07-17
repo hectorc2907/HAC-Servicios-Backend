@@ -35,3 +35,13 @@ export const createClient = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const deleteClient = async (req, res) => {
+  try {
+    const client = await Client.findByIdAndDelete(req.params.id);
+    if (!client) return res.status(404).json({ message: "Client not found" });
+    return res.sendStauts(204);
+  } catch (error) {
+    return res.status(404).json({ message: "Client not found" });
+  }
+};
