@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/auth.routes.js";
+import clientRoutes from "./src/routes/client.routes.js";
 
 dotenv.config();
 
@@ -11,10 +12,11 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
 app.use("/api", authRoutes);
+app.use("/api", clientRoutes);
 
 export default app;
