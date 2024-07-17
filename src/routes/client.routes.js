@@ -8,7 +8,10 @@ import {
   deleteClient,
 } from "../controllers/client.controllers.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
-import { createClientSchema } from "../schemas/client.schema.js";
+import {
+  createClientSchema,
+  updateClientSchema,
+} from "../schemas/client.schema.js";
 
 const router = Router();
 
@@ -21,6 +24,11 @@ router.post(
   createClient
 );
 router.delete("/client/:id", authRequired, deleteClient);
-router.put("/client/:id", authRequired, updateClient);
+router.put(
+  "/client/:id",
+  authRequired,
+  validateSchema(updateClientSchema),
+  updateClient
+);
 
 export default router;
