@@ -21,9 +21,9 @@ export const getClient = async (req, res) => {
 
 export const createClient = async (req, res) => {
   try {
-    const { firtName, lastName, phoneNumber, address } = req.body;
+    const { firstName, lastName, phoneNumber, address } = req.body;
     const newClient = new Client({
-      firtName,
+      firstName,
       lastName,
       phoneNumber,
       address,
