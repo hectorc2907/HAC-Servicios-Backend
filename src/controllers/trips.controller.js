@@ -48,3 +48,20 @@ export const deleteTrip = async (req, res) => {
     return res.status(404).json({ message: "Trip not found" });
   }
 };
+
+export const updateTrip = async (req, res) => {
+  try {
+    const trip = await Trips.findById(req.params.id);
+    if (!trip) return res.status(404).json({ message: "Trip not found" });
+    if (trip.user._id.toString() !== req.user.id)
+      return res.status(401).json({ message: "Unauthorized" });
+    Object.assign(trip, req.body);
+    if (req.body.income !== undefined || req.body.expenses !== undefined) {
+      trip.balance = trip.income - trip.expenses;
+    }
+    const updateTrip = await trip.save();
+    res.json(updateTrip);
+  } catch (error) {
+    return res.status(404).json({ message: "Trip not found" });
+  }
+};
