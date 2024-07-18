@@ -8,7 +8,7 @@ import {
   deleteTrip,
 } from "../controllers/trips.controller.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
-import { createTripSchema, updateTripSchema } from "../schemas/trips.schema.js";
+import { updateTripSchema } from "../schemas/trips.schema.js";
 
 const router = Router();
 
@@ -17,7 +17,6 @@ router.get("/trips/:id", authRequired, getTrip);
 router.post(
   "/trips",
   authRequired,
-  validateSchema(createTripSchema),
   createTrip
 );
 router.delete("/trips/:id", authRequired, deleteTrip);
