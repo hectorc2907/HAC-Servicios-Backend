@@ -52,3 +52,30 @@ export const deleteSale = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const updateSale = async (req, res) => {
+  try {
+    const { saleId } = req.params;
+    const { quantity, price, customer, tripId } = req.body;
+    const sale = await Sale.findById(saleId);
+    if (!sale) {
+      return res.status(404).json({ message: "Sale not found" });
+    }
+    if (tripId) {
+      const trip = await Trips.findById(tripId);
+      if (!trip) {
+        return res.status(404).json({ message: "Trip not found" });
+      }
+      sale.trip = tripId;
+    }
+    if (quantity !== undefined) sale.quantity = quantity;
+    if (price !== undefined) sale.price = price;
+    if (quantity !== undefined && price !== undefined) {
+      sale.total = quantity * price;
+    }
+    const updatedSale = await sale.save();
+    res.json(updatedSale);
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
