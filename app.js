@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/auth.routes.js";
 import clientRoutes from "./src/routes/client.routes.js";
+import tripRoutes from "./src/routes/trip.routes.js";
 
 dotenv.config();
 
@@ -18,5 +19,6 @@ app.use(cookieParser());
 
 app.use("/api", authRoutes);
 app.use("/api", clientRoutes);
+app.use("/api", tripRoutes);
 
 export default app;

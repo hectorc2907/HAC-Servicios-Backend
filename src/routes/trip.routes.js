@@ -20,7 +20,7 @@ router.post(
   validateSchema(createTripSchema),
   createTrip
 );
-router.delete("/trip/:id", authRequired, deleteTrip);
+router.delete("/trips/:id", authRequired, deleteTrip);
 router.put(
   "/trips/:id",
   authRequired,
