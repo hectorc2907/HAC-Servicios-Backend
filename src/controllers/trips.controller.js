@@ -20,3 +20,18 @@ export const getTrip = async (req, res) => {
     return res.status(404).json({ message: "Trip not found" });
   }
 };
+
+export const createTrip = async (req, res) => {
+  try {
+    const newTrip = new Trips({
+      income: 0,
+      expenses: 0,
+      balance: 0,
+      user: req.user.id,
+    });
+    const savedTrip = await newTrip.save();
+    res.json(savedTrip);
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
