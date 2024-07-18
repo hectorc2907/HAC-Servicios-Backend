@@ -9,3 +9,13 @@ export const getSales = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const getSale = async (req, res) => {
+  try {
+    const sale = await Sale.findById(req.params.id).populate("trip");
+    if (!sale) return res.status(404).json({ message: "Sale not found" });
+    res.json(sale);
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
