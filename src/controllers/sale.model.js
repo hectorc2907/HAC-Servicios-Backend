@@ -19,3 +19,25 @@ export const getSale = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const createSale = async (req, res) => {
+  try {
+    const { quantity, price, customer, tripId } = req.body;
+    const trip = await Trips.findById(tripId);
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+    const total = quantity * price;
+    const newSale = new Sale({
+      quantity,
+      price,
+      total,
+      customer,
+      trip: tripId,
+    });
+    const savedSale = await newSale.save();
+    res.json(savedSale);
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
