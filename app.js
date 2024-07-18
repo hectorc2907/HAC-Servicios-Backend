@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/auth.routes.js";
 import clientRoutes from "./src/routes/client.routes.js";
-import tripRoutes from "./src/routes/trip.routes.js";
+import tripRoutes from "./src/routes/trips.routes.js";
 
 dotenv.config();
 

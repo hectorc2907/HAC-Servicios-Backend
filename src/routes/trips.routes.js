@@ -8,7 +8,7 @@ import {
   deleteTrip,
 } from "../controllers/trips.controller.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
-import { createTripSchema, updateTripSchema } from "../schemas/trip.schema.js";
+import { createTripSchema, updateTripSchema } from "../schemas/trips.schema.js";
 
 const router = Router();
 
