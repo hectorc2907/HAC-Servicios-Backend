@@ -41,3 +41,14 @@ export const createSale = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const deleteSale = async (req, res) => {
+  try {
+    const sale = await Sale.findById(req.params.id);
+    if (!sale) return res.status(404).json({ message: "Sale not found" });
+    await sale.remove();
+    res.json({ message: "Sale deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
