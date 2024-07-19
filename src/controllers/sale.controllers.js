@@ -55,9 +55,9 @@ export const deleteSale = async (req, res) => {
 
 export const updateSale = async (req, res) => {
   try {
-    const { saleId } = req.params;
+    const { id } = req.params;
     const { quantity, price, customer, tripId } = req.body;
-    const sale = await Sale.findById(saleId);
+    const sale = await Sale.findById(id);
     if (!sale) {
       return res.status(404).json({ message: "Sale not found" });
     }
