@@ -6,6 +6,9 @@ const saleSchema = new mongoose.Schema(
     price: { type: Number, required: true, trim: true },
     total: { type: Number, required: true, trim: true },
     customer: { type: String, required: true, trim: true },
+    half: { type: String, required: true, trim: true },
+    sate: { type: String, required: true, trim: true },
+    details: { type: String, required: true },
     trip: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Trips",
