@@ -23,10 +23,16 @@ export const getClient = async (req, res) => {
 
 export const createClient = async (req, res) => {
   try {
-    const { firstName, lastName, phoneNumber, address } = req.body;
+    const { firstName, nickName, phoneNumber, address } = req.body;
+
+    const existingClient = await Client.findOne({ nickName });
+    if (existingClient) {
+      return res.status(400).json({ message: "Nickname already in use" });
+    }
+
     const newClient = new Client({
       firstName,
-      lastName,
+      nickName,
       phoneNumber,
       address,
       user: req.user.id,
@@ -53,10 +59,17 @@ export const deleteClient = async (req, res) => {
 
 export const updateClient = async (req, res) => {
   try {
+    const { nickName } = req.body;
     const client = await Client.findById(req.params.id);
     if (!client) return res.status(404).json({ message: "Client not found" });
     if (client.user._id.toString() !== req.user.id)
       return res.status(401).json({ message: "Unauthorized" });
+    if (nickName && nickName !== client.nickName) {
+      const existingClient = await Client.findOne({ nickName });
+      if (existingClient) {
+        return res.status(400).json({ message: "Nickname already in use" });
+      }
+    }
     Object.assign(client, req.body);
     const updateClient = await client.save();
     res.json(updateClient);
