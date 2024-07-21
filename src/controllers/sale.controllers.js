@@ -22,7 +22,8 @@ export const getSale = async (req, res) => {
 
 export const createSale = async (req, res) => {
   try {
-    const { quantity, price, customer, tripId } = req.body;
+    const { quantity, price, customer, half, state, details, tripId } =
+      req.body;
     const trip = await Trips.findById(tripId);
     if (!trip) {
       return res.status(404).json({ message: "Trip not found" });
@@ -33,8 +34,12 @@ export const createSale = async (req, res) => {
       price,
       total,
       customer,
+      half,
+      state,
+      details,
       trip: tripId,
     });
+    console.log(newSale);
     const savedSale = await newSale.save();
     res.json(savedSale);
   } catch (error) {
@@ -44,9 +49,8 @@ export const createSale = async (req, res) => {
 
 export const deleteSale = async (req, res) => {
   try {
-    const sale = await Sale.findById(req.params.id);
+    const sale = await Sale.findByIdAndDelete(req.params.id);
     if (!sale) return res.status(404).json({ message: "Sale not found" });
-    await sale.remove();
     res.json({ message: "Sale deleted successfully" });
   } catch (error) {
     return res.status(500).json({ message: "Something went wrong" });
@@ -55,9 +59,10 @@ export const deleteSale = async (req, res) => {
 
 export const updateSale = async (req, res) => {
   try {
-    const { saleId } = req.params;
-    const { quantity, price, customer, tripId } = req.body;
-    const sale = await Sale.findById(saleId);
+    const { id } = req.params;
+    const { quantity, price, customer, half, state, details, tripId } =
+      req.body;
+    const sale = await Sale.findById(id);
     if (!sale) {
       return res.status(404).json({ message: "Sale not found" });
     }
@@ -70,6 +75,10 @@ export const updateSale = async (req, res) => {
     }
     if (quantity !== undefined) sale.quantity = quantity;
     if (price !== undefined) sale.price = price;
+    if (customer !== undefined) sale.customer = customer;
+    if (half !== undefined) sale.half = half;
+    if (state !== undefined) sale.state = state;
+    if (details !== undefined) sale.details = details;
     if (quantity !== undefined && price !== undefined) {
       sale.total = quantity * price;
     }
