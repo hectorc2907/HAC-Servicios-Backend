@@ -22,11 +22,14 @@ export const getTrip = async (req, res) => {
 };
 
 export const createTrip = async (req, res) => {
+  const { kgTotal } = req.body;
   try {
     const newTrip = new Trips({
       income: 0,
       expenses: 0,
       balance: 0,
+      kgTotal,
+      kgSold: 0,
       user: req.user.id,
     });
     const savedTrip = await newTrip.save();
