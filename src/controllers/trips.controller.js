@@ -1,4 +1,6 @@
 import Trips from "../models/trips.model.js";
+import Sales from "../models/sale.model.js";
+import Bills from "../models/bills.model.js";
 
 export const getTrips = async (req, res) => {
   try {
@@ -46,6 +48,8 @@ export const deleteTrip = async (req, res) => {
     if (!trip) return res.status(404).json({ message: "Trip not found" });
     if (trip.user._id.toString() !== req.user.id)
       return res.status(401).json({ message: "Unauthorized" });
+    await Sales.deleteMany({ trip: trip._id });
+    await Bills.deleteMany({ trip: trip._id });
     await trip.deleteOne();
     return res.sendStatus(200);
   } catch (error) {
