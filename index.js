@@ -1,10 +1,14 @@
 import app from "./app.js";
 import { connectDB } from "./src/database/connect.js";
 
-export default async (req, res) => {
-  // Conectar a la base de datos
+const PORT = process.env.BACKEND_PORT || 3000;
+
+const startServer = async () => {
   await connectDB();
-  
-  // Utiliza la aplicación Express para manejar la solicitud
-  return app(req, res);
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 };
+
+startServer();
