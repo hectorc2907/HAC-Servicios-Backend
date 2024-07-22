@@ -4,10 +4,7 @@ const database = process.env.MONGODB_URI;
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(database, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(database);
     console.log(">>> DB is connected");
   } catch (error) {
     console.error("DB connection erro:", error);
