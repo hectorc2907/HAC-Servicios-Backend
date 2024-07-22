@@ -13,9 +13,14 @@ dotenv.config();
 
 const app = express();
 
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+};
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
