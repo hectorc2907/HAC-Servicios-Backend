@@ -16,11 +16,12 @@ const app = express();
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
   credentials: true,
+  optionsSuccessStatus: 200,
 };
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
+app.use("*", cors(corsOptions));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
