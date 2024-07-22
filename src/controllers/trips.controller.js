@@ -30,6 +30,7 @@ export const createTrip = async (req, res) => {
       balance: 0,
       kgTotal,
       kgSold: 0,
+      kgDif: 0,
       user: req.user.id,
     });
     const savedTrip = await newTrip.save();
@@ -61,6 +62,9 @@ export const updateTrip = async (req, res) => {
     Object.assign(trip, req.body);
     if (req.body.income !== undefined || req.body.expenses !== undefined) {
       trip.balance = trip.income - trip.expenses;
+    }
+    if (req.body.kgSold !== undefined || req.body.kgTotal !== undefined) {
+      trip.kgDif = trip.kgTotal - trip.kgSold;
     }
     const updateTrip = await trip.save();
     res.json(updateTrip);

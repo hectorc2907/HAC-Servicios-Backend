@@ -10,4 +10,5 @@ export const updateTripSchema = z.object({
   balance: z.number({ required_error: "Balance is a Number" }).optional(),
   kgTotal: z.number({ required_error: "KG is a Number" }).optional(),
   kgSold: z.number({ required_error: "KG is a Number" }).optional(),
+  kgDif: z.number({ required_error: "KG is a Number" }).optional(),
 });
