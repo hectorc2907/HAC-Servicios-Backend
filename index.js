@@ -1,4 +1,5 @@
 import app from "./app.js";
+import cors from "cors";
 import { connectDB } from "./src/database/connect.js";
 
 const PORT = process.env.BACKEND_PORT || 3000;
